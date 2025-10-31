@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MCP Coding Server UI</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome for Laptop Logo -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #000000 0%, #00ff66 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      color: #00ff66;
+      padding-top: 40px;
+    }
+
+    /* Header logo section */
+    .app-header {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: 90%;
+      max-width: 1200px;
+      margin-bottom: 20px;
+      text-decoration: none;
+    }
+
+    .app-header i {
+      font-size: 38px;        /* Laptop logo size */
+      color: #00ff66;         /* Neon green (color kept) */
+      margin-right: 12px;
+      text-shadow: none;      /* glow removed */
+    }
+
+    .app-header h2 {
+      color: #00ff66;
+      font-weight: bold;
+      margin: 0;
+      text-shadow: none;      /* glow removed */
+    }
+
+    /* Glassmorphism card with dark tint */
+    .glass-card {
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 255, 102, 0.3);
+      color: #e0e0e0;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeSlideIn 1s ease-out forwards;
+    }
+
+    @keyframes fadeSlideIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .btn-hacker {
+      background-color: #00ff66;
+      color: black;
+      font-weight: bold;
+      border: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-hacker:hover {
+      background-color: #00cc52;
+      color: #ffffff;
+      box-shadow: 0 0 12px #00ff66;
+    }
+
+    #output {
+      background: #111;
+      border: 1px solid #00ff66;
+      color: #00ff66;
+    }
+
+    .neon-header {
+      color: #00ff66;
+      font-weight: bold;
+      text-align: center;
+      text-shadow: none;      /* glow removed */
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header with logo + text -->
+  <div class="app-header">
+    <i class="fa-solid fa-laptop-code"></i>
+    <h2>CodeForge MCP</h2>
+  </div>
+
+  <div class="container py-3">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-10">
+        <div class="card glass-card shadow-lg rounded-4">
+          <div class="card-body p-4">
+            <h1 class="neon-header mb-4">MCP Coding Server</h1>
+            <div class="mb-3">
+              <label for="tool" class="form-label">Choose Tool:</label>
+              <select id="tool" class="form-select bg-dark text-light border-success">
+                <option value="code_review">Code Review</option>
+                <option value="code_generation">Code Generation</option>
+                <option value="code_refactor">Code Refactor</option>
+                <option value="code_debug">Code Debug</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="language" class="form-label">Language:</label>
+              <input type="text" id="language" class="form-control bg-dark text-light border-success" placeholder="e.g. python, javascript, java" value="python">
+            </div>
+            <div class="mb-3">
+              <label for="input" class="form-label">Paste Your Code or Prompt:</label>
+              <textarea id="input" class="form-control bg-dark text-light border-success" rows="8" placeholder="Paste your code or write your prompt here..."></textarea>
+            </div>
+            <div class="d-grid mb-4">
+              <button onclick="runTool()" class="btn btn-hacker btn-lg shadow-sm">🚀 Run Tool</button>
+            </div>
+            <h4 class="mb-3">🧾 Output:</h4>
+            <pre id="output" class="p-3 rounded-3 shadow-sm" style="min-height:150px;"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    async function runTool() {
+      const tool = document.getElementById("tool").value;
+      const input = document.getElementById("input").value;
+      const language = document.getElementById("language").value;
+      const payload = tool === "code_generation"
+        ? { prompt: input, language }
+        : { code: input, language };
+
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/run/${tool}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": "mysecureapikey"
+          },
+          body: JSON.stringify(payload)
+        });
+        const result = await response.json();
+        document.getElementById("output").innerText = JSON.stringify(result, null, 2);
+      } catch (err) {
+        document.getElementById("output").innerText = "⚠️ Error: " + err.message;
+      }
+    }
+  </script>
+</body>
+</html>
