@@ -7,6 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 from typing import Dict, Any
 from dotenv import load_dotenv
+import uvicorn
 load_dotenv()
 
 from tools.code_generation import CodeGenerationTool
@@ -112,3 +113,9 @@ async def list_prompts_endpoint(x_api_key: str = Header(None)):
     if x_api_key != API_KEY:
         raise HTTPException(status_code=401, detail="Invalid API Key")
     return prompt_manager.list_prompts()
+
+if __name__ == "__main__":
+    import os
+    port = int(os.environ.get("PORT", 8000))  # Render gives you this automatically
+    uvicorn.run("server:app", host="0.0.0.0", port=port)
+
