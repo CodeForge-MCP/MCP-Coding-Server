@@ -7,6 +7,11 @@ from pathlib import Path
 # Import centralized API key
 from config import MCP_API_KEY
 
+if __name__ == "__main__":
+    import os, uvicorn
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run("server:app", host="0.0.0.0", port=port)
+
 # === Auth ===
 def require_auth(x_api_key: str = Header(...)):
     if x_api_key != MCP_API_KEY:
