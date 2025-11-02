@@ -2,7 +2,3 @@ fastapi
 uvicorn
 python-dotenv
 pydantic
-smtplib
-email-validator
-passlib
-python-jose[cryptography]
