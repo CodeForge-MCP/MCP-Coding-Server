@@ -1,4 +1,4 @@
-# 🚀CodeForge MCP — AI Coding Server (FastAPI + MCP Protocol)
+# CodeForge MCP — AI Coding Server (FastAPI + MCP Protocol)
 
 * CodeForge MCP is a modular AI coding server built with FastAPI and following the Model Context Protocol (MCP) standard.
  It enables AI agents and developers to securely run code review, refactoring, and debugging operations via REST APIs and an interactive browser UI.
@@ -8,7 +8,7 @@
 🔗 Live URL: [(https://mcp-coding-server.onrender.com/)](https://mcp-coding-server.onrender.com/)
 
 
-## 🧩 Features
+## Features
 
 - **⚙️FastAPI backend** — lightweight, async, and scalable
 
@@ -18,7 +18,7 @@
 - **🔁 Full pipeline mode** — run all tools together for a unified result
 - **📊 Pylint-powered static analysis** — catch code issues and style violations automatically
   
-## 🗂️ Project Structure
+## Project Structure
 MCP Coding Server/
 
 ├── server.py                  # Main FastAPI app (entry point)
@@ -49,39 +49,39 @@ MCP Coding Server/
 
 ├── requirements.txt           # Python dependencies
 
-└── README.md                  # You’re here 😎
+└── README.md                 
 
-## ⚙️ Installation (Local Setup)
+## Installation (Local Setup)
 - **1️⃣ Clone the Repository**
 git clone https://github.com/yourusername/mcp-coding-server.git
 cd mcp-coding-server
----
+
 - **2️⃣ Create Virtual Environment**
 python -m venv venv
 source venv/bin/activate       # macOS/Linux
 venv\Scripts\activate          # Windows
----
+  
 - **3️⃣ Install Dependencies**
 pip install -r requirements.txt
----
+  
 - **4️⃣ Add Environment Variables**
 ## Create a .env file:
 
 ⚠️ Never commit .env to GitHub — keep secrets private!
 
-## 🚀 Run the Server
+## Run the Server
 uvicorn server:app --reload
 
-Then open 👉 http://127.0.0.1:8000
+Then open http://127.0.0.1:8000
 
-## 🔑 Authentication
+## Authentication
 All API requests require the correct API key header:
 
 If the key is invalid, you’ll receive:
 
 401 Unauthorized
 
-## 🧰 Requirements
+## Requirements
 - fastapi
 - uvicorn
 - python-dotenv
@@ -89,11 +89,9 @@ If the key is invalid, you’ll receive:
 - httpx
 - pylint
 - jinja2
-## 🧪 Development Tools
+## Development Tools
 - Tool	Description
 - pylint	Code analysis and linting
 - flake8	Style checks
-
-If you paste them here, I’ll personalize the top section for you (and add deployment info at the bottom).
-gunicorn -k uvicorn.workers.UvicornWorker server:app
  
+
